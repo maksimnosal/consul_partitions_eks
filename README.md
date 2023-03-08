@@ -12,7 +12,6 @@ aws sts get-caller-identity
 ### 2) Create an EKS cluster:
 ```
 terraform init
-terraform plan
 terraform apply
 ```
 ### 3) Configure the kubernetes contexts:
