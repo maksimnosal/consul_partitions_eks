@@ -40,12 +40,9 @@ helm install consul hashicorp/consul -n consul --values consul_values_a.yaml --v
 ### 6) Copy Secrets to cluster-b
 ```
 kubectl --context $CLUSTER_B_CONTEXT create namespace consul
-kubectl get secret -n consul consul-ca-cert -o yaml | \
-kubectl --context $CLUSTER_B_CONTEXT apply -n consul -f -
-kubectl get secret -n consul consul-ca-key -o yaml | \
-kubectl --context $CLUSTER_B_CONTEXT apply -n consul -f -
-kubectl get secret -n consul consul-gossip-encryption-key -o yaml | \
-kubectl --context $CLUSTER_B_CONTEXT apply -n consul -f -
+kubectl get secret -n consul consul-ca-cert -o yaml | kubectl --context $CLUSTER_B_CONTEXT apply -n consul -f -
+kubectl get secret -n consul consul-ca-key -o yaml | kubectl --context $CLUSTER_B_CONTEXT apply -n consul -f -
+kubectl get secret -n consul consul-gossip-encryption-key -o yaml | kubectl --context $CLUSTER_B_CONTEXT apply -n consul -f -
 ```
 ### 7) Prepare cluster-b
 ```
