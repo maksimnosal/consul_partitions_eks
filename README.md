@@ -1,4 +1,4 @@
-The lab setup for experimenting with Consul partitions on AWS EKS (EC2).
+A lab setup for experimenting with Consul partitions on AWS EKS (EC2).
 The setup includes:
 - one VPC
 - two EKS clusters (one with servers, another with clients)
