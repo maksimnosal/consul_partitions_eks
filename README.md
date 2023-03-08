@@ -72,8 +72,10 @@ kubectl set env -n consul deployment/consul-api-gateway-controller -c api-gatewa
 ```
 ### 11) Discovering cluster-a Consul UI URL
 ```
-kubectl --context $CLUSTER_A_CONTEXT get svc -n consul | grep consul-ui | awk '{print $4}'
+echo https://$(kubectl --context $CLUSTER_A_CONTEXT get svc -n consul | grep consul-ui | awk '{print $4}')
 ```
+Don't forget to log in using the supplied bootstrap token
+
 ### 12) Deleting everything
 ```
 kubectl config use-context $CLUSTER_B_CONTEXT
