@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  key: <ADD_LICENSE_HERE>
+kind: Secret
+metadata:
+  name: license
+  namespace: consul
+type: Opaque
