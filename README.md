@@ -56,31 +56,25 @@ kubectl apply -f bootstrap-token.yaml
 kubectl apply --kustomize "github.com/hashicorp/consul-api-gateway/config/crd?ref=v0.5.1"
 ```
 
-### 8) Get cluster-b EKS API endpoint
+### 8) Update consul_values_b.yaml with correct URLs
 ```
 export CLUSTER_B_EKS_ENDPOINT=$(kubectl config view -o jsonpath="{.clusters[?(@.name == \"$CLUSTER_B_CONTEXT\")].cluster.server}")
-```
-### 9) Get cluster-a external Consul server LB
-```
 export CLUSTER_A_CONSUL_LB=$(kubectl --context $CLUSTER_A_CONTEXT get svc -n consul | grep consul-expose-servers | awk '{print $4}')
-```
-### 10) Edit values in consul_values_b.yaml 
-```
 sed -e "s|<cluster-b_eks_api_endpoint>|${CLUSTER_B_EKS_ENDPOINT}|g" -e "s|<cluster-a_external_server_lb>|${CLUSTER_A_CONSUL_LB}|g" consul_values_b_template.yaml > consul_values_b.yaml
 ```
-### 11) Install Consul in cluster-b
+### 9) Install Consul in cluster-b
 ```
 helm install consul hashicorp/consul -n consul --values consul_values_b.yaml --version=1.0.2
 ```
-### 12) Applying a workaround for api-gateway-controller crashing due to "x509: certificate is valid for client.dc1.consul, localhost, not server.dc1.consul" error
+### 10) Applying a workaround for api-gateway-controller crashing due to "x509: certificate is valid for client.dc1.consul, localhost, not server.dc1.consul" error
 ```
 kubectl set env -n consul deployment/consul-api-gateway-controller -c api-gateway-controller CONSUL_TLS_SERVER_NAME-
 ```
-### 13) Discovering cluster-a Consul UI URL
+### 11) Discovering cluster-a Consul UI URL
 ```
 kubectl --context $CLUSTER_A_CONTEXT get svc -n consul | grep consul-ui | awk '{print $4}'
 ```
-### 14) Deleting everything
+### 12) Deleting everything
 ```
 kubectl config use-context $CLUSTER_B_CONTEXT
 helm uninstall consul -n consul
