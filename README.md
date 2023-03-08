@@ -9,7 +9,7 @@ The setup includes:
 ```
 aws sts get-caller-identity
 ```
-### 2) Create an EKS cluster:
+### 2) Create an EKS clusters:
 ```
 terraform init
 terraform apply
